@@ -24,3 +24,12 @@ FROM Reparation
          JOIN Mecanicien ON Reparation.id_mecanicien = Mecanicien.id
 GROUP BY Modele_voiture.marque, Mecanicien.nom
 ORDER BY Modele_voiture.marque, Mecanicien.nom;
+
+SELECT
+    Mecanicien.nom AS mecanicien,
+    SUM(Reparation.cout) AS cout_reparation_rapporte
+FROM Reparation
+         JOIN Mecanicien ON Reparation.id_mecanicien = Mecanicien.id
+GROUP BY Mecanicien.nom
+ORDER BY SUM(Reparation.cout) ASC
+LIMIT 1;
