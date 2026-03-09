@@ -41,6 +41,35 @@ public class DataRetriever {
 
         return list;
     }
+
+    public MecanicienMin findMecanicienMoinsRentable() {
+        MecanicienMin mecanicienMin = new MecanicienMin();
+
+        String sql = """
+        SELECT Mecanicien.nom AS nom_mecanicien,
+               SUM(Reparation.cout) AS cout_reparation_rapporte
+        FROM Reparation
+        JOIN Mecanicien ON Reparation.id_mecanicien = Mecanicien.id
+        GROUP BY Mecanicien.nom
+        ORDER BY cout_reparation_rapporte ASC
+        LIMIT 1
+    """;
+
+        try (Connection connection = dbConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            if (resultSet.next()) {
+                mecanicienMin.setNomMecanicien(resultSet.getString("nom_mecanicien"));
+                mecanicienMin.setCoutReparationRapporte(resultSet.getDouble("cout_reparation_rapporte"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mecanicienMin;
+    }
  }
 }
 
