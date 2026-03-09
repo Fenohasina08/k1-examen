@@ -8,7 +8,7 @@ public class DBConnection {
             String jdbcURl = System.getenv("JDBC_URl"); //
             String user = System.getenv("postgres");
             String password = System.getenv("fenohasina3123");
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/examen-k2", "postgres", "postgres");
+            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/examen-k1", "postgres", "postgres");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
