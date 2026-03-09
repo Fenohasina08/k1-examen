@@ -14,3 +14,13 @@ SELECT
     ROUND(100.0 * SUM(CASE WHEN Modele_voiture.modele = 'RAM' THEN 1 ELSE 0 END) / COUNT(*), 2) AS nbre_reparation_ram
 FROM Reparation
          JOIN Modele_voiture ON Reparation.id_modele_voiture = Modele_voiture.id;
+
+SELECT
+    Modele_voiture.marque,
+    Mecanicien.nom AS nom_mecanicien,
+    SUM(Reparation.cout) AS cout_reparation
+FROM Reparation
+         JOIN Modele_voiture ON Reparation.id_modele_voiture = Modele_voiture.id
+         JOIN Mecanicien ON Reparation.id_mecanicien = Mecanicien.id
+GROUP BY Modele_voiture.marque, Mecanicien.nom
+ORDER BY Modele_voiture.marque, Mecanicien.nom;
